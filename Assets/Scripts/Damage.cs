@@ -38,6 +38,7 @@ public class Damage : MonoBehaviourPun
     private void Start()
     {
         damageText.enabled = false;
+        //defenderStats.GetComponent<PhotonView>().RPC("SetHealthBar", RpcTarget.AllBuffered, defenderStats.maxHealth);
         SetHealthBar(defenderStats.maxHealth);
     }
 
@@ -118,8 +119,8 @@ public class Damage : MonoBehaviourPun
 
             StartCoroutine(DamageTextUI());
 
-            //defenderStats.GetComponent<PhotonView>().RPC("UpdateHealthBar", RpcTarget.AllBuffered, defenderStats.currentHealth);
-            UpdateHealthBar(defenderStats.currentHealth);
+            defenderStats.GetComponent<PhotonView>().RPC("UpdateHealthBar", RpcTarget.AllBuffered, defenderStats.currentHealth);
+            //UpdateHealthBar(defenderStats.currentHealth);
         }
         else
         {
@@ -144,22 +145,22 @@ public class Damage : MonoBehaviourPun
         textAnim.SetBool("Damaged", false);
     }
 
-    [PunRPC]
+    //[PunRPC]
     public void SetHealthBar(float health)
     {
-        if (photonView.IsMine)
-        {
+      //  if (photonView.IsMine)
+       // {
             healthBar.maxValue = health;
             healthBar.value = health;
-        }
+      //  }
     }
 
     [PunRPC]
     public void UpdateHealthBar(float health)
     {
-        if (photonView.IsMine)
-        {
+       // if (photonView.IsMine)
+       // {
             healthBar.value = health;
-        }
+      //  }
     }
 }

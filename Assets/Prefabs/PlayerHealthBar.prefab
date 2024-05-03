@@ -236,8 +236,8 @@ GameObject:
   - component: {fileID: 9134941418024921359}
   - component: {fileID: 4645909640256950201}
   - component: {fileID: 3938174592351308711}
-  - component: {fileID: 5515357319318896443}
-  - component: {fileID: 5617919207778979599}
+  - component: {fileID: 1445172703493103282}
+  - component: {fileID: 1084152928940835331}
   m_Layer: 5
   m_Name: PlayerHealthBar
   m_TagString: Untagged
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   healthBar: {fileID: 4645909640256950201}
---- !u!114 &5515357319318896443
+--- !u!114 &1445172703493103282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -342,21 +342,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8585510899901117007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 5617919207778979599}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &5617919207778979599
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1084152928940835331
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

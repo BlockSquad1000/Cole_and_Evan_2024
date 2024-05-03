@@ -17,8 +17,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public GameObject nameUI;
     public GameObject connectingUI;
 
-    public Slider healthBar;
-    public TMP_Text damageText;
     public GameObject playerUI;
 
     private string name = "Default";
@@ -51,10 +49,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         _player.GetComponent<PlayerSetup>().IsLocalPlayer();
 
-        Slider _healthBar = Instantiate(healthBar, playerUI.transform);
-        TMP_Text _damageText = Instantiate(damageText, playerUI.transform);
+        GameObject _playerUI = PhotonNetwork.Instantiate(playerUI.name, new Vector3(0,0,0), Quaternion.identity);
+
+        Slider _healthBar = _playerUI.GetComponentInChildren<Slider>();
+        TMP_Text _damageText = _playerUI.GetComponentInChildren<TMP_Text>();
 
         HealthBarLookAt lookAt = _healthBar.GetComponent<HealthBarLookAt>();
+        lookAt.target = _player;
+
         Damage damage = _player.GetComponent<Damage>();
         damage.healthBar = _healthBar;
         damage.damageText = _damageText;
