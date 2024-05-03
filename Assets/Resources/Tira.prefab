@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 8090557218527709251}
   - component: {fileID: 3679235212699021735}
   - component: {fileID: 2032581366556204740}
+  - component: {fileID: 331152626797812678}
   m_Layer: 0
   m_Name: Tira
   m_TagString: Player
@@ -411,6 +412,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 774035216753996501}
+--- !u!114 &331152626797812678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774035216753996492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0129335180dccc48a2e1f6d7c8f80e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerUI: {fileID: 3119983037514576309, guid: 679b40590456c96469e9e48760887871, type: 3}
 --- !u!1 &774035217029422411
 GameObject:
   m_ObjectHideFlags: 0

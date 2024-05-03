@@ -85,7 +85,7 @@ public class Damage : MonoBehaviourPun
 
                 //defenderStats.Damage(totalDamageValue, currentDamageType);
 
-                defenderStats.GetComponent<PhotonView>().RPC("Damage", RpcTarget.AllBuffered, totalDamageValue, currentDamageType);
+                defenderStats.GetComponent<PhotonView>().RPC("Damage", RpcTarget.All, totalDamageValue, currentDamageType);
 
                 damageText.color = Color.red;
             }
@@ -101,7 +101,7 @@ public class Damage : MonoBehaviourPun
 
                 //defenderStats.Damage(totalDamageValue, currentDamageType);
 
-                defenderStats.GetComponent<PhotonView>().RPC("Damage", RpcTarget.AllBuffered, totalDamageValue, currentDamageType);
+                defenderStats.GetComponent<PhotonView>().RPC("Damage", RpcTarget.All, totalDamageValue, currentDamageType);
 
                 damageText.color = Color.green;
             }
@@ -112,14 +112,14 @@ public class Damage : MonoBehaviourPun
 
                 //defenderStats.Damage(totalDamageValue, currentDamageType);
 
-                defenderStats.GetComponent<PhotonView>().RPC("Damage", RpcTarget.AllBuffered, totalDamageValue, currentDamageType);
+                defenderStats.GetComponent<PhotonView>().RPC("Damage", RpcTarget.All, totalDamageValue, currentDamageType);
 
                 damageText.color = Color.blue;
             }
 
             StartCoroutine(DamageTextUI());
 
-            defenderStats.GetComponent<PhotonView>().RPC("UpdateHealthBar", RpcTarget.AllBuffered, defenderStats.currentHealth);
+            defenderStats.GetComponent<PhotonView>().RPC("UpdateHealthBar", RpcTarget.All, defenderStats.currentHealth);
             //UpdateHealthBar(defenderStats.currentHealth);
         }
         else

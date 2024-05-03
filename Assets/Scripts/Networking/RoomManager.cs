@@ -48,17 +48,5 @@ public class RoomManager : MonoBehaviourPunCallbacks
         GameObject _player = PhotonNetwork.Instantiate(player.name, spawnPoint.position, Quaternion.identity);
 
         _player.GetComponent<PlayerSetup>().IsLocalPlayer();
-
-        GameObject _playerUI = PhotonNetwork.Instantiate(playerUI.name, new Vector3(0,0,0), Quaternion.identity);
-
-        Slider _healthBar = _playerUI.GetComponentInChildren<Slider>();
-        TMP_Text _damageText = _playerUI.GetComponentInChildren<TMP_Text>();
-
-        HealthBarLookAt lookAt = _healthBar.GetComponent<HealthBarLookAt>();
-        lookAt.target = _player;
-
-        Damage damage = _player.GetComponent<Damage>();
-        damage.healthBar = _healthBar;
-        damage.damageText = _damageText;
     }
 }
