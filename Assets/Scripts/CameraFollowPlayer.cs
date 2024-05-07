@@ -6,6 +6,7 @@ using Photon.Pun;
 public class CameraFollowPlayer : MonoBehaviour
 {
     public GameObject player;
+    public GameObject playerFollow;
     Transform playerPos;
 
     bool followingPlayer;
@@ -27,10 +28,10 @@ public class CameraFollowPlayer : MonoBehaviour
 
     void FindPlayer()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<PhotonView>().IsMine)
+        if (player.GetComponent<PhotonView>().IsMine)
         {
-            player = GameObject.FindGameObjectWithTag("PlayerCam");
-            playerPos = player.transform;
+            playerFollow = GameObject.FindGameObjectWithTag("PlayerCam");
+            playerPos = playerFollow.transform;
         }
     }
 
@@ -57,7 +58,7 @@ public class CameraFollowPlayer : MonoBehaviour
 
         if (!followingPlayer)
         {
-            player = null;
+            playerFollow = null;
         }
 
         if (canEdgeScroll)
@@ -86,7 +87,7 @@ public class CameraFollowPlayer : MonoBehaviour
             }
         }
 
-        if(player = null)
+        if(playerFollow = null)
         {
             Debug.Log("Camera cannot find player right now");
         }

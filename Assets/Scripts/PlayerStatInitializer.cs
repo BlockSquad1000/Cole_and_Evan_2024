@@ -219,6 +219,9 @@ public class PlayerStatInitializer : MonoBehaviourPun
                     if (behaviour) behaviour.enabled = false;
                     GetComponent<PlayerStatInitializer>().enabled = true;
                     GetComponent<Revive>().enabled = true;
+                    GetComponent<PhotonView>().enabled = true;
+                    GetComponent<PhotonRigidbodyView>().enabled = true;
+                    GetComponent<PhotonTransformView>().enabled = true;
                 }
 
                 Rigidbody rigidbody = GetComponent<Rigidbody>();

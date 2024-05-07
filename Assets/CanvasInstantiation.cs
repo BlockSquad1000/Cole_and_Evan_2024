@@ -7,6 +7,7 @@ using TMPro;
 public class CanvasInstantiation : MonoBehaviour
 {
     public GameObject playerUI;
+    public GameObject playerCamera;
 
     private void Awake()
     {
@@ -23,5 +24,9 @@ public class CanvasInstantiation : MonoBehaviour
         damage.damageText = _damageText;
 
         _playerUI.transform.SetParent(GameObject.Find("PlayerUICanvas").GetComponent<Transform>(), false);
+
+        GameObject _playerCam = Instantiate(playerCamera);
+        CameraFollowPlayer follow = _playerCam.GetComponent<CameraFollowPlayer>();
+        follow.player = this.gameObject;
     }
 }
