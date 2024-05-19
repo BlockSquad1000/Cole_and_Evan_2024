@@ -304,6 +304,7 @@ MonoBehaviour:
   eAbilityCooldown: 0
   rAbilityCooldown: 0
   qDamage: 0
+  view: {fileID: 0}
 --- !u!114 &774035216753996496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,7 +426,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerUI: {fileID: 3119983037514576309, guid: 679b40590456c96469e9e48760887871, type: 3}
-  playerCamera: {fileID: 7901802950642885384, guid: 7c1bfde6da244cc4aa5b36f85ca8193a, type: 3}
 --- !u!1 &774035217029422411
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public class CanvasInstantiation : MonoBehaviour
 {
     public GameObject playerUI;
-    public GameObject playerCamera;
+    Camera playerCamera;
 
     private void Awake()
     {
@@ -25,8 +26,8 @@ public class CanvasInstantiation : MonoBehaviour
 
         _playerUI.transform.SetParent(GameObject.Find("PlayerUICanvas").GetComponent<Transform>(), false);
 
-        GameObject _playerCam = Instantiate(playerCamera);
-        CameraFollowPlayer follow = _playerCam.GetComponent<CameraFollowPlayer>();
-        follow.player = this.gameObject;
+        playerCamera = Camera.main;
+        CameraFollowPlayer follow = playerCamera.GetComponent<CameraFollowPlayer>();
+        follow.view = this.GetComponent<PhotonView>();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 
-public class TiraAbilityScript : MonoBehaviour
+public class TiraAbilityScript : MonoBehaviourPun
 {
     public GameObject playerObjectTira;
 
@@ -21,11 +21,16 @@ public class TiraAbilityScript : MonoBehaviour
     public float rAbilityCooldown = 0;
 
     public float qDamage;
+
+    public PhotonView view;
+
     // Start is called before the first frame update
     void Start()
     {
         airboundSlashTrigger.SetActive(false);
         playerObjectTira = this.gameObject;
+
+        view = GetComponent<PhotonView>();
     }
 
     [PunRPC]
@@ -51,18 +56,18 @@ public class TiraAbilityScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (this.GetComponent<PhotonView>().IsMine)
+            if (Physics.Raycast(camToNavRay, out hit, 100))
             {
-                if (Physics.Raycast(camToNavRay, out hit, 100))
+                if (playerStats.canCast && qAbilityCooldown <= 0)
                 {
-                    if (playerStats.canCast && qAbilityCooldown <= 0)
+                    if (view.IsMine)
                     {
                         transform.LookAt(hit.point);
-                        AirboundSlash();
+                        view.RPC("AirboundSlash", RpcTarget.All);
                         qAbilityCooldown = 8 / (1 + playerStats.abilityHaste);
                     }
                 }
-            }        
+            }
         }
     }
 
