@@ -13,7 +13,7 @@ public class CameraFollowPlayer : MonoBehaviourPun
 
     Vector3 cameraPos = new Vector3(0, 21, -5);
 
-    [SerializeField] Camera myCam;
+    [SerializeField] GameObject myCam;
 
     public float edgeSize = 30f;
     public float moveAmount = 100f;
@@ -31,11 +31,8 @@ public class CameraFollowPlayer : MonoBehaviourPun
 
     void FindPlayer()
     {
-       //if (view.IsMine)
-       //{
-            //GameObject player = view.gameObject as GameObject;
-            myCam.transform.position = playerPos.transform.position + cameraPos;
-       //}
+        myCam.transform.position = playerPos.transform.position + cameraPos;
+        Debug.Log("Finding player...");
     }
 
     // Update is called once per frame
@@ -55,7 +52,10 @@ public class CameraFollowPlayer : MonoBehaviourPun
 
         if (followingPlayer)
         {
-            FindPlayer();
+            if (view.IsMine)
+            {
+                FindPlayer();
+            }
         }
 
        // if (!followingPlayer)

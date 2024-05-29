@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPos: {fileID: 7633968139169649362}
-  myCam: {fileID: 6001798723510764765}
+  myCam: {fileID: 6001798723510764760}
   edgeSize: 30
   moveAmount: 50
   view: {fileID: 2613367047613588955}
@@ -61,6 +61,14 @@ PrefabInstance:
     - target: {fileID: 7901802950642885384, guid: 7c1bfde6da244cc4aa5b36f85ca8193a, type: 3}
       propertyPath: m_Name
       value: PlayerCam
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901802950642885384, guid: 7c1bfde6da244cc4aa5b36f85ca8193a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901802950642885384, guid: 7c1bfde6da244cc4aa5b36f85ca8193a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7901802950642885388, guid: 7c1bfde6da244cc4aa5b36f85ca8193a, type: 3}
       propertyPath: m_RootOrder
@@ -109,6 +117,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7901802950642885387, guid: 7c1bfde6da244cc4aa5b36f85ca8193a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7c1bfde6da244cc4aa5b36f85ca8193a, type: 3}
+--- !u!1 &6001798723510764760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7901802950642885384, guid: 7c1bfde6da244cc4aa5b36f85ca8193a, type: 3}
+  m_PrefabInstance: {fileID: 4531320277878138832}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6001798723510764764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7901802950642885388, guid: 7c1bfde6da244cc4aa5b36f85ca8193a, type: 3}
@@ -175,8 +188,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 774035216753996501, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: myCam
+      value: 
+      objectReference: {fileID: 6001798723510764765}
+    - target: {fileID: 774035216753996501, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5118387177723577797, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
       propertyPath: sceneViewId

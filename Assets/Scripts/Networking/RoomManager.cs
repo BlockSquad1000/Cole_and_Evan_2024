@@ -46,6 +46,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         roomCam.SetActive(false);
 
         GameObject _player = PhotonNetwork.Instantiate(player.name, spawnPoint.position, Quaternion.identity);
+        _player.GetComponentInChildren<PlayerMovement>().enabled = true;
+        _player.transform.Find("PlayerCam").gameObject.SetActive(true);
 
         _player.GetComponent<PlayerSetup>().IsLocalPlayer();
     }

@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float time = 0f;
 
     public Damage damage;
+
+    [SerializeField] Camera myCam;
     //public Damage.DamageType attackType;
     public float attackDamage;
 
@@ -46,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<NavMeshAgent>().speed = playerStats.totalMovementSpeed;
        // moveSpeed = playerStats.totalMovementSpeed;
 
-        Ray camToNavRay = Camera.main.ScreenPointToRay(Input.mousePosition); //A ray will be positioned at the same point where the player's mouse is positioned
+        Ray camToNavRay = myCam.ScreenPointToRay(Input.mousePosition); //A ray will be positioned at the same point where the player's mouse is positioned
         RaycastHit hit;
 
         if (Input.GetButtonDown("Fire1"))
