@@ -97,7 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25811ef71b0d5524982ee3790506143e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  playerPos: {fileID: 0}
   myCam: {fileID: 0}
   edgeSize: 30
   moveAmount: 25
+  view: {fileID: 0}

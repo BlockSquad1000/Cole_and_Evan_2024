@@ -6,33 +6,36 @@ using Photon.Pun;
 public class CameraFollowPlayer : MonoBehaviourPun
 {
     //public GameObject player;
-    public Transform playerPos;
+    [SerializeField] GameObject playerPos;
 
     bool followingPlayer;
     bool canEdgeScroll;
 
     Vector3 cameraPos = new Vector3(0, 21, -5);
 
-    public Camera myCam;
+    [SerializeField] Camera myCam;
 
     public float edgeSize = 30f;
     public float moveAmount = 100f;
 
-    public PhotonView view;
+    [SerializeField] PhotonView view;
 
     private void Start()
     {
         canEdgeScroll = true;
-        myCam = GetComponent<Camera>();
+
+        //myCam = GetComponentInChildren<Camera>();
+        //playerPos = GetComponentInChildren
+        //view = GetComponentInChildren<PhotonView>();
     }
 
     void FindPlayer()
     {
-       if (view.IsMine)
-       {
-            GameObject player = view.gameObject as GameObject;
-            this.transform.position = player.transform.position + cameraPos;
-       }
+       //if (view.IsMine)
+       //{
+            //GameObject player = view.gameObject as GameObject;
+            myCam.transform.position = playerPos.transform.position + cameraPos;
+       //}
     }
 
     // Update is called once per frame
@@ -55,10 +58,10 @@ public class CameraFollowPlayer : MonoBehaviourPun
             FindPlayer();
         }
 
-        if (!followingPlayer)
-        {
-            playerPos = null;
-        }
+       // if (!followingPlayer)
+       // {
+            //playerPos = null;
+       // }
 
         if (canEdgeScroll)
         {
@@ -67,22 +70,22 @@ public class CameraFollowPlayer : MonoBehaviourPun
 
             if (mousePosX < edgeSize)
             {
-                transform.Translate(Vector3.right * -moveAmount * Time.deltaTime);
+                myCam.transform.Translate(Vector3.right * -moveAmount * Time.deltaTime);
             }
 
             if (mousePosX >= Screen.width - edgeSize)
             {
-                transform.Translate(Vector3.right * moveAmount * Time.deltaTime);
+                myCam.transform.Translate(Vector3.right * moveAmount * Time.deltaTime);
             }
 
             if (mousePosY < edgeSize)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1 * -moveAmount * Time.deltaTime);
+                myCam.transform.position = new Vector3(myCam.transform.position.x, myCam.transform.position.y, myCam.transform.position.z + 1 * -moveAmount * Time.deltaTime);
             }
 
             if (mousePosY >= Screen.height - edgeSize)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1 * moveAmount * Time.deltaTime);
+                myCam.transform.position = new Vector3(myCam.transform.position.x, myCam.transform.position.y, myCam.transform.position.z + 1 * moveAmount * Time.deltaTime);
             }
         }
 

@@ -8,7 +8,7 @@ using Photon.Pun;
 public class CanvasInstantiation : MonoBehaviour
 {
     public GameObject playerUI;
-    Camera playerCamera;
+    public Camera playerCamera;
 
     private void Awake()
     {
@@ -26,8 +26,9 @@ public class CanvasInstantiation : MonoBehaviour
 
         _playerUI.transform.SetParent(GameObject.Find("PlayerUICanvas").GetComponent<Transform>(), false);
 
-        playerCamera = Camera.main;
+       /* playerCamera = Instantiate(playerCamera) as Camera;
         CameraFollowPlayer follow = playerCamera.GetComponent<CameraFollowPlayer>();
         follow.view = this.GetComponent<PhotonView>();
+        follow.playerPos = this.gameObject.transform;*/
     }
 }
