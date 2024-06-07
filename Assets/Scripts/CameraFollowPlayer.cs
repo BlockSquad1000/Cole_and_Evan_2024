@@ -32,7 +32,7 @@ public class CameraFollowPlayer : MonoBehaviourPun
     void FindPlayer()
     {
         myCam.transform.position = playerPos.transform.position + cameraPos;
-        Debug.Log("Finding player...");
+        //Debug.Log("Finding player...");
     }
 
     // Update is called once per frame

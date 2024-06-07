@@ -23,6 +23,7 @@ public class TiraAbilityScript : MonoBehaviourPun
     public float qDamage;
 
     public PhotonView view;
+    public Camera playerCam;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +52,7 @@ public class TiraAbilityScript : MonoBehaviourPun
 
         playerStats.currentAttackRate -= Time.deltaTime;
 
-        Ray camToNavRay = Camera.main.ScreenPointToRay(Input.mousePosition); //A ray will be positioned at the same point where the player's mouse is positioned
+        Ray camToNavRay = playerCam.ScreenPointToRay(Input.mousePosition); //A ray will be positioned at the same point where the player's mouse is positioned
         RaycastHit hit;
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -142,7 +143,6 @@ public class TiraAbilityScript : MonoBehaviourPun
         //  go.transform.parent = this.transform;
 
         // trigger = go.GetComponentInChildren<AirboundSlashTrigger>();
-        airboundSlashTrigger.GetComponentInChildren<AirboundSlashTrigger>();
 
         StartCoroutine(AirboundSlashCheck());
         Debug.Log("Beginning Airbound Slash.");
@@ -151,10 +151,11 @@ public class TiraAbilityScript : MonoBehaviourPun
     IEnumerator AirboundSlashCheck()
     {
         yield return new WaitForSeconds(0.75f);
-        trigger.airboundTrigger = true; 
+       // trigger.airboundTrigger = true;
+        airboundSlashTrigger.GetComponentInChildren<AirboundSlashTrigger>().Trigger();
         Debug.Log("Airbound Slash trigger activated.");
         yield return new WaitForSeconds(0.02f);
-        trigger.airboundTrigger = false;
+       // trigger.airboundTrigger = false;
         airboundSlashTrigger.SetActive(false);
         Debug.Log("Airbound Slash trigger deactivated.");
     }

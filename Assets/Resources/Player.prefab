@@ -187,6 +187,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 774035216753996497, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: view
+      value: 
+      objectReference: {fileID: 2613367047613588955}
+    - target: {fileID: 774035216753996497, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: playerCam
+      value: 
+      objectReference: {fileID: 6001798723510764765}
     - target: {fileID: 774035216753996501, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
       propertyPath: myCam
       value: 
@@ -195,12 +203,20 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1848437392188898546, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5118387177723577797, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
       propertyPath: sceneViewId
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6089794576687582876, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
       propertyPath: sceneViewId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308004156084843177, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
