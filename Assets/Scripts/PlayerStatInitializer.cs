@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using System.Linq;
 
 public class PlayerStatInitializer : MonoBehaviourPun
 {
@@ -182,7 +183,6 @@ public class PlayerStatInitializer : MonoBehaviourPun
     [PunRPC]
     public void Damage(float damageAmount, Damage.DamageType damageType)
     {
-
         foreach (Transform transform in this.transform)
         {
             if (transform.gameObject.tag == "Shield")
@@ -213,16 +213,7 @@ public class PlayerStatInitializer : MonoBehaviourPun
 
     public void SortShieldValues()
     {
-        List<float> times = new List<float>();
-
-        foreach (GameObject shield in shields)
-        {
-            float time = GetComponent<ShieldDuration>().currentTime;
-            times.Add(time);
-
-            times.Sort();
-            times.Reverse();
-        }
+        shields = shields.OrderBy(x => x.GetComponent<ShieldDuration>().currentTime).ToList();
     }
 
     [PunRPC]

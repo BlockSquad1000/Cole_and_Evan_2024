@@ -11,6 +11,7 @@ TagManager:
   - PlayerCam
   - RevivalItem
   - PlayerUI
+  - Shield
   layers:
   - Default
   - TransparentFX
