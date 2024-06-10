@@ -95,7 +95,7 @@ public class PlayerStatInitializer : MonoBehaviourPun
 
     public bool dead;
 
-    public List<GameObject> shields;
+    public List<GameObject> shields = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -105,6 +105,14 @@ public class PlayerStatInitializer : MonoBehaviourPun
         triggerRange.radius = baseRange;
         attackRate = (attackInterval / attackSpeed);
         currentAttackRate = attackRate;
+
+        foreach (Transform transform in this.transform)
+        {
+            if (transform.CompareTag("Shield"))
+            {
+                shields.Add(transform.gameObject);
+            }
+        }
     }
 
     private void Update()
@@ -183,14 +191,6 @@ public class PlayerStatInitializer : MonoBehaviourPun
     [PunRPC]
     public void Damage(float damageAmount, Damage.DamageType damageType)
     {
-        foreach (Transform transform in this.transform)
-        {
-            if (transform.gameObject.tag == "Shield")
-            {
-                shields.Add(transform.gameObject);
-            }
-        }
-
         SortShieldValues();
 
         currentHealth -= damageAmount;
