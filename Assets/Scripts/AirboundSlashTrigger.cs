@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AirboundSlashTrigger : MonoBehaviour
 {
-    public bool inTriggerZone;
+    public bool trigger;
     public bool airboundTrigger;
 
     public TiraAbilityScript tiraAbilities;

@@ -94,6 +94,8 @@ public class PlayerStatInitializer : MonoBehaviourPun
 
     public bool dead;
 
+    public List<GameObject> shields;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -180,7 +182,19 @@ public class PlayerStatInitializer : MonoBehaviourPun
     [PunRPC]
     public void Damage(float damageAmount, Damage.DamageType damageType)
     {
+
+        foreach (Transform transform in this.transform)
+        {
+            if (transform.gameObject.tag == "Shield")
+            {
+                shields.Add(transform.gameObject);
+            }
+        }
+
+        SortShieldValues();
+
         currentHealth -= damageAmount;
+
         Debug.Log(this.name + " has taken " + damageAmount + " damage.");                
 
         if (currentHealth <= 0)
@@ -194,6 +208,20 @@ public class PlayerStatInitializer : MonoBehaviourPun
 
                 statGrowths.currentExp += expDrop;
             }
+        }
+    }
+
+    public void SortShieldValues()
+    {
+        List<float> times = new List<float>();
+
+        foreach (GameObject shield in shields)
+        {
+            float time = GetComponent<ShieldDuration>().currentTime;
+            times.Add(time);
+
+            times.Sort();
+            times.Reverse();
         }
     }
 
