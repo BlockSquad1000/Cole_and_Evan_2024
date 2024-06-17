@@ -95,7 +95,9 @@ public class PlayerStatInitializer : MonoBehaviourPun
 
     public bool dead;
 
-    public List<GameObject> shields = new List<GameObject>();
+    public List<GameObject> generalShields = new List<GameObject>();
+    public List<GameObject> magicShields = new List<GameObject>();
+    public List<GameObject> physicalShields = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -108,9 +110,17 @@ public class PlayerStatInitializer : MonoBehaviourPun
 
         foreach (Transform transform in this.transform)
         {
-            if (transform.CompareTag("Shield"))
+            if (transform.CompareTag("GeneralShield"))
             {
-                shields.Add(transform.gameObject);
+                generalShields.Add(transform.gameObject);
+            }
+            if (transform.CompareTag("PhysShield"))
+            {
+                physicalShields.Add(transform.gameObject);
+            }
+            if (transform.CompareTag("MagicShield"))
+            {
+                magicShields.Add(transform.gameObject);
             }
         }
     }
@@ -192,28 +202,102 @@ public class PlayerStatInitializer : MonoBehaviourPun
     public void Damage(float damageAmount, Damage.DamageType damageType)
     {
         SortShieldValues();
-
-        currentHealth -= damageAmount;
-
-        Debug.Log(this.name + " has taken " + damageAmount + " damage.");                
-
-        if (currentHealth <= 0)
+        
+        if(damageType == global::Damage.DamageType.Physical)
         {
-            Kill();
-            Debug.Log(this.name + " has been killed.");
-
-            if (this.gameObject.tag == "Enemy")
+            if(physicalShields.Count > 0)
             {
-                Destroy(this.gameObject);
+                physicalShields[0].GetComponent<ShieldDuration>().DamageShield(damageAmount, damageType);
+            }
+            else if(generalShields.Count > 0)
+            {
+                generalShields[0].GetComponent<ShieldDuration>().DamageShield(damageAmount, damageType);
+            }
+            else
+            {
+                currentHealth -= damageAmount;
 
-                statGrowths.currentExp += expDrop;
+                Debug.Log(this.name + " has taken " + damageAmount + " damage.");
+
+                if (currentHealth <= 0)
+                {
+                    Kill();
+                    Debug.Log(this.name + " has been killed.");
+
+                    if (this.gameObject.tag == "Enemy")
+                    {
+                        Destroy(this.gameObject);
+
+                        statGrowths.currentExp += expDrop;
+                    }
+                }
+            }
+        }
+
+        if (damageType == global::Damage.DamageType.Magical)
+        {
+            if (magicShields.Count > 0)
+            {
+                magicShields[0].GetComponent<ShieldDuration>().DamageShield(damageAmount, damageType);
+            }
+            else if (generalShields.Count > 0)
+            {
+                generalShields[0].GetComponent<ShieldDuration>().DamageShield(damageAmount, damageType);
+            }
+            else
+            {
+                currentHealth -= damageAmount;
+
+                Debug.Log(this.name + " has taken " + damageAmount + " damage.");
+
+                if (currentHealth <= 0)
+                {
+                    Kill();
+                    Debug.Log(this.name + " has been killed.");
+
+                    if (this.gameObject.tag == "Enemy")
+                    {
+                        Destroy(this.gameObject);
+
+                        statGrowths.currentExp += expDrop;
+                    }
+                }
+            }
+        }
+
+        if (damageType == global::Damage.DamageType.True)
+        {       
+            if (generalShields.Count > 0)
+            {
+                generalShields[0].GetComponent<ShieldDuration>().DamageShield(damageAmount, damageType);
+            }
+            else
+            {
+                currentHealth -= damageAmount;
+
+                Debug.Log(this.name + " has taken " + damageAmount + " damage.");
+
+                if (currentHealth <= 0)
+                {
+                    Kill();
+                    Debug.Log(this.name + " has been killed.");
+
+                    if (this.gameObject.tag == "Enemy")
+                    {
+                        Destroy(this.gameObject);
+
+                        statGrowths.currentExp += expDrop;
+                    }
+                }
             }
         }
     }
 
     public void SortShieldValues()
     {
-        shields = shields.OrderBy(x => x.GetComponent<ShieldDuration>().currentTime).ToList();
+        generalShields = generalShields.OrderBy(x => x.GetComponent<ShieldDuration>().currentTime).ToList();
+        physicalShields = physicalShields.OrderBy(x => x.GetComponent<ShieldDuration>().currentTime).ToList();
+        magicShields = magicShields.OrderBy(x => x.GetComponent<ShieldDuration>().currentTime).ToList();
     }
 
     [PunRPC]

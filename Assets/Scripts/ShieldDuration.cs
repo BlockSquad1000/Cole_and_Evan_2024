@@ -19,9 +19,21 @@ public class ShieldDuration : MonoBehaviour
     private void Update()
     {
         currentTime -= Time.deltaTime;
+        currentCapacity = currentCapacity - decayRate;
 
-        if(currentTime <= 0)
+        if(currentTime <= 0 || currentCapacity <= 0)
         {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void DamageShield(float damage, Damage.DamageType damageType)
+    {
+        currentCapacity -= damage;
+
+        if(currentCapacity < 0)
+        {
+            this.GetComponentInParent<PlayerStatInitializer>().Damage(-currentCapacity, damageType);
             Destroy(this.gameObject);
         }
     }

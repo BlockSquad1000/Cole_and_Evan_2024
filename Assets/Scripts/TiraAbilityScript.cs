@@ -70,6 +70,11 @@ public class TiraAbilityScript : MonoBehaviourPun
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            this.GetComponent<Shields>().ActivateGeneralShield(10f, playerStats.maxHealth * 0.1f, 0f);
+        }
     }
 
     [PunRPC]
