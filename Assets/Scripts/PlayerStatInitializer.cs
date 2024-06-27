@@ -107,22 +107,6 @@ public class PlayerStatInitializer : MonoBehaviourPun
         triggerRange.radius = baseRange;
         attackRate = (attackInterval / attackSpeed);
         currentAttackRate = attackRate;
-
-        foreach (Transform transform in this.transform)
-        {
-            if (transform.CompareTag("GeneralShield"))
-            {
-                generalShields.Add(transform.gameObject);
-            }
-            if (transform.CompareTag("PhysShield"))
-            {
-                physicalShields.Add(transform.gameObject);
-            }
-            if (transform.CompareTag("MagicShield"))
-            {
-                magicShields.Add(transform.gameObject);
-            }
-        }
     }
 
     private void Update()
@@ -186,6 +170,49 @@ public class PlayerStatInitializer : MonoBehaviourPun
         if(airborneDuration > 0)
         {
             this.transform.position = Vector3.MoveTowards(transform.position, newPos, displacementRateCombined * Time.deltaTime);
+        }
+
+        foreach(GameObject shield in generalShields)
+        {
+            if(shield == null)
+            {
+                generalShields.Remove(shield);
+            }
+        }
+
+        foreach (GameObject shield in physicalShields)
+        {
+            if (shield == null)
+            {
+                physicalShields.Remove(shield);
+            }
+        }
+
+        foreach (GameObject shield in magicShields)
+        {
+            if (shield == null)
+            {
+                magicShields.Remove(shield);
+            }
+        }
+    }
+
+    public void AddShieldsToList()
+    {
+        foreach (Transform transform in this.transform)
+        {
+            if (transform.CompareTag("GeneralShield"))
+            {
+                generalShields.Add(transform.gameObject);
+            }
+            if (transform.CompareTag("PhysShield"))
+            {
+                physicalShields.Add(transform.gameObject);
+            }
+            if (transform.CompareTag("MagicShield"))
+            {
+                magicShields.Add(transform.gameObject);
+            }
         }
     }
 

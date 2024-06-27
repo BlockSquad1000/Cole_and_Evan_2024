@@ -25,9 +25,24 @@ public class CanvasInstantiation : MonoBehaviour
         damage.damageText = _damageText;
 
         Shields shields = this.GetComponent<Shields>();
-        /*shields.generalShieldSlider = _healthBar.gameObject.GetChild(3);
-        shields.physicalShieldSlider
-        shields.magicShieldSlider*/
+
+        foreach(Transform transform in _healthBar.transform)
+        {
+            if(transform.name == "GeneralShieldBar")
+            {
+                shields.generalShieldSlider = transform.gameObject;
+            }
+
+            if (transform.name == "PhysicalShieldBar")
+            {
+                shields.physicalShieldSlider = transform.gameObject;
+            }
+
+            if (transform.name == "MagicShieldBar")
+            {
+                shields.magicShieldSlider = transform.gameObject;
+            }
+        }
 
         _playerUI.transform.SetParent(GameObject.Find("PlayerUICanvas").GetComponent<Transform>(), false);
 

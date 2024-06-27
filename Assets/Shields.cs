@@ -54,6 +54,8 @@ public class Shields : MonoBehaviour
         generalShieldSlider.SetActive(true);
         generalShieldSlider.GetComponent<Slider>().maxValue = stats.maxHealth * 0.33f;
         generalShieldSlider.GetComponent<Slider>().value = spawnedShield.GetComponent<ShieldDuration>().maxCapacity;
+
+        stats.generalShields.Add(spawnedShield);
     }
 
     public void ActivatePhysicalShield(float time, float capacity, float decayRate)
@@ -66,6 +68,8 @@ public class Shields : MonoBehaviour
         physicalShieldSlider.SetActive(true);
         physicalShieldSlider.GetComponent<Slider>().maxValue = stats.maxHealth * 0.33f;
         physicalShieldSlider.GetComponent<Slider>().value = spawnedShield.GetComponent<ShieldDuration>().maxCapacity;
+
+        stats.physicalShields.Add(spawnedShield);
     }
 
     public void ActivateMagicShield(float time, float capacity, float decayRate)
@@ -78,5 +82,7 @@ public class Shields : MonoBehaviour
         magicShieldSlider.SetActive(true);
         magicShieldSlider.GetComponent<Slider>().maxValue = stats.maxHealth * 0.33f;
         magicShieldSlider.GetComponent<Slider>().value = spawnedShield.GetComponent<ShieldDuration>().maxCapacity;
+
+        stats.magicShields.Add(spawnedShield);
     }
 }
