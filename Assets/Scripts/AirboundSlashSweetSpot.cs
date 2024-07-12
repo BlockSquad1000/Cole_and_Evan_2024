@@ -5,26 +5,14 @@ using UnityEngine;
 public class AirboundSlashSweetSpot : MonoBehaviour
 {
     public List<GameObject> enemiesInTrigger;
+    [SerializeField] private AirboundSlashTrigger trigger;
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log("Enemy entered trigger zone.");
+            Debug.Log("Enemy entered sweet spot trigger zone.");
             enemiesInTrigger.Add(other.gameObject);
-
-            if (GetComponentInParent<AirboundSlashTrigger>().airboundTrigger)
-            {
-                if (other != null)
-                {
-                    Debug.Log("Enemy has been knocked airborne");
-                    other.GetComponent<PlayerStatInitializer>().Displaced(other.gameObject.transform.position.x - .1f, other.gameObject.transform.position.z - .1f, 1.0f);
-                }
-                else
-                {
-                    Debug.Log("Enemy cannot be found");
-                }
-            }
         }
     }
 
@@ -36,4 +24,15 @@ public class AirboundSlashSweetSpot : MonoBehaviour
             enemiesInTrigger.Remove(other.gameObject);
         }
     }
+
+    public void Trigger()
+    {
+        foreach (GameObject enemy in enemiesInTrigger)
+        {
+            Debug.Log("Enemy has been knocked airborne");
+            enemy.GetComponent<PlayerStatInitializer>().Displaced(enemy.gameObject.transform.position.x - .1f, enemy.gameObject.transform.position.z - .1f, 1.0f);
+            return;
+        }
+    }
 }
+           

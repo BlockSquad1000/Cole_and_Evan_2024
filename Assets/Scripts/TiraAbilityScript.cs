@@ -156,11 +156,14 @@ public class TiraAbilityScript : MonoBehaviourPun
     IEnumerator AirboundSlashCheck()
     {
         yield return new WaitForSeconds(0.75f);
-       // trigger.airboundTrigger = true;
+        trigger.airboundTrigger = true;
         airboundSlashTrigger.GetComponentInChildren<AirboundSlashTrigger>().Trigger();
+        airboundSlashTrigger.GetComponentInChildren<AirboundSlashSweetSpot>().Trigger();
         Debug.Log("Airbound Slash trigger activated.");
         yield return new WaitForSeconds(0.02f);
-       // trigger.airboundTrigger = false;
+        trigger.airboundTrigger = false;
+        trigger.enemiesInTrigger.Clear();
+        trigger.GetComponentInChildren<AirboundSlashSweetSpot>().enemiesInTrigger.Clear();
         airboundSlashTrigger.SetActive(false);
         Debug.Log("Airbound Slash trigger deactivated.");
     }
