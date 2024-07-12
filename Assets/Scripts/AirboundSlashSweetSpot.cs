@@ -12,7 +12,7 @@ public class AirboundSlashSweetSpot : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             Debug.Log("Enemy entered sweet spot trigger zone.");
-            enemiesInTrigger.Add(other.gameObject);
+            enemiesInTrigger.Add(other.gameObject);   
         }
     }
 
@@ -29,7 +29,7 @@ public class AirboundSlashSweetSpot : MonoBehaviour
     {
         foreach (GameObject enemy in enemiesInTrigger)
         {
-            Debug.Log("Enemy has been knocked airborne");
+            Debug.Log("Enemy has been knocked airborne");            
             enemy.GetComponent<PlayerStatInitializer>().Displaced(enemy.gameObject.transform.position.x - .1f, enemy.gameObject.transform.position.z - .1f, 1.0f);
             return;
         }

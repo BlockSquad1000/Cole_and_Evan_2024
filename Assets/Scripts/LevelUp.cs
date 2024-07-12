@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelUp : MonoBehaviour
 {
-    public int playerLevel = 1;
+    public int currentLevel = 1;
 
     public int maxExp;
     public int currentExp;
@@ -23,7 +23,7 @@ public class LevelUp : MonoBehaviour
         if(currentExp >= maxExp)
         {
             currentExp -= maxExp;
-            playerLevel++;
+            currentLevel++;
             playerBaseStats.LevelUpStats();
         }
     }

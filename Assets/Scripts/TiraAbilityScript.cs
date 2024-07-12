@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using TMPro;
 
 public class TiraAbilityScript : MonoBehaviourPun
 {
@@ -144,10 +145,6 @@ public class TiraAbilityScript : MonoBehaviourPun
         playerStats.Disarmed(0.75f / playerStats.tenacity);
 
         airboundSlashTrigger.SetActive(true);
-        // GameObject go = Instantiate(airboundSlashTrigger, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
-        //  go.transform.parent = this.transform;
-
-        // trigger = go.GetComponentInChildren<AirboundSlashTrigger>();
 
         StartCoroutine(AirboundSlashCheck());
         Debug.Log("Beginning Airbound Slash.");
