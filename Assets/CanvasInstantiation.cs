@@ -46,12 +46,7 @@ public class CanvasInstantiation : MonoBehaviour
 
         _playerUI.transform.SetParent(GameObject.Find("PlayerUICanvas").GetComponent<Transform>(), false);
 
-        GameObject playerRankUI = GameObject.Find("PlayerUICanvas");
+        GameObject playerRankUI = GameObject.Find("GeneralUICanvas");
         playerRankUI.GetComponentInChildren<RankingSystem>().playerLevel = this.gameObject.GetComponent<LevelUp>();
-
-        /* playerCamera = Instantiate(playerCamera) as Camera;
-         CameraFollowPlayer follow = playerCamera.GetComponent<CameraFollowPlayer>();
-         follow.view = this.GetComponent<PhotonView>();
-         follow.playerPos = this.gameObject.transform;*/
     }
 }

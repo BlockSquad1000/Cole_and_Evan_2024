@@ -20,6 +20,11 @@ public class RankingSystem : MonoBehaviour
     public TMP_Text eRankUpText;
     public TMP_Text rRankUpText;
 
+    private void Awake()
+    {
+        this.gameObject.SetActive(false);
+    }
+
     public void RankUp()
     {
         for (int currentRank = 0; currentRank <= 18; currentRank += 0)
