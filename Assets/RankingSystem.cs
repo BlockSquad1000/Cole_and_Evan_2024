@@ -9,10 +9,10 @@ public class RankingSystem : MonoBehaviour
 
     [Header("Ranks")]
     [SerializeField] private int ranks;
-    [SerializeField] private int qRank;
-    [SerializeField] private int wRank;
-    [SerializeField] private int eRank;
-    [SerializeField] private int rRank;
+    public int qRank;
+    public int wRank;
+    public int eRank;
+    public int rRank;
 
     [Header("Ability Rank Up Text")]
     public TMP_Text qRankUpText;
@@ -22,7 +22,7 @@ public class RankingSystem : MonoBehaviour
 
     private void Awake()
     {
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
     }
 
     public void RankUp()
@@ -39,7 +39,7 @@ public class RankingSystem : MonoBehaviour
 
     public void RankUpQ()
     {
-        if (ranks > 0 && qRank > Mathf.Ceil(playerLevel.currentLevel % 2))
+        if (ranks > 0 && qRank < Mathf.Ceil(playerLevel.currentLevel % 2) && qRank < 5)
         {
             ranks--;
             qRank++;
@@ -49,7 +49,7 @@ public class RankingSystem : MonoBehaviour
 
     public void RankUpW()
     {
-        if (ranks > 0 && wRank > Mathf.Ceil(playerLevel.currentLevel % 2))
+        if (ranks > 0 && wRank < Mathf.Ceil(playerLevel.currentLevel % 2) && wRank < 5)
         {
             ranks--;
             wRank++;
@@ -59,7 +59,7 @@ public class RankingSystem : MonoBehaviour
 
     public void RankUpE()
     {
-        if (ranks > 0 && eRank > Mathf.Ceil(playerLevel.currentLevel % 2))
+        if (ranks > 0 && eRank < Mathf.Ceil(playerLevel.currentLevel % 2) && eRank < 5)
         {
             ranks--;
             eRank++;
@@ -69,7 +69,7 @@ public class RankingSystem : MonoBehaviour
 
     public void RankUpR()
     {
-        if (ranks > 0 && rRank > Mathf.Floor(playerLevel.currentLevel % 6))
+        if (ranks > 0 && rRank >= Mathf.Floor(playerLevel.currentLevel % 6) && rRank < 3)
         {
             ranks--;
             rRank++;

@@ -13,33 +13,44 @@ public class TiraAbilityScript : MonoBehaviourPun
     public PlayerStatInitializer playerStats;
 
     public GameObject airboundSlashTrigger;
+    public GameObject lashTrigger;
 
-    [SerializeField] AirboundSlashTrigger trigger;
+    [SerializeField] AirboundSlashTrigger airboundTriggerVar;
+    [SerializeField] LashTrigger lashTriggerVar;
 
     public float qAbilityCooldown = 0;
     public float wAbilityCooldown = 0;
     public float eAbilityCooldown = 0;
     public float rAbilityCooldown = 0;
 
+    public bool speedBoostIsActive = false;
+
     public float qDamage;
+    public float wDamage;
+    public float eDamage;
+    public float rInstant;
+    public float rDoT;
 
     public PhotonView view;
     public Camera playerCam;
 
+    public RankingSystem ranks;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         airboundSlashTrigger.SetActive(false);
+        lashTrigger.SetActive(false);
         playerObjectTira = this.gameObject;
 
         view = GetComponent<PhotonView>();
+
+        ranks = GameObject.Find("GeneralUICanvas").GetComponentInChildren<RankingSystem>();
     }
 
     [PunRPC]
     public void Update()
     {
-        qDamage = 40 + (playerStats.totalAttackDamage * 0.7f);
-
         if (movementScript.attacking)
         {
             BasicAttack();
@@ -60,10 +71,11 @@ public class TiraAbilityScript : MonoBehaviourPun
         {
             if (Physics.Raycast(camToNavRay, out hit, 100))
             {
-                if (playerStats.canCast && qAbilityCooldown <= 0)
+                if (playerStats.canCast && qAbilityCooldown <= 0 && ranks.qRank > 0)
                 {
                     if (view.IsMine)
                     {
+                        qDamage = 40 + (playerStats.totalAttackDamage * 0.7f) + (ranks.qRank * 30);
                         transform.LookAt(hit.point);
                         view.RPC("AirboundSlash", RpcTarget.All);
                         qAbilityCooldown = 8 / (1 + playerStats.abilityHaste);
@@ -74,9 +86,60 @@ public class TiraAbilityScript : MonoBehaviourPun
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            this.GetComponent<Shields>().ActivatePhysicalShield(3f, playerStats.maxHealth * 0.1f, 0f);
+            if (wAbilityCooldown <= 0 && ranks.wRank > 0)
+            {
+                playerStats.stunnedDuration = 0;
+                playerStats.rootedDuration = 0;
+                playerStats.silencedDuration = 0;
+                playerStats.disarmedDuration = 0;
+
+                StartCoroutine(SpeedBoost());
+
+                wAbilityCooldown = (15f - ranks.wRank) / (1 + playerStats.abilityHaste);
+            }
+            else if (wAbilityCooldown > 0)
+            {
+                if (speedBoostIsActive)
+                {
+                    if (Input.GetKeyDown(KeyCode.W))
+                    {
+                        if (playerStats.canCast)
+                        {
+                            Lash();
+                            speedBoostIsActive = false;
+                        }
+                    }
+                }
+            }
         }
     }
+
+    IEnumerator SpeedBoost()
+    {
+        speedBoostIsActive = true;
+        float tempAbilityPower = playerStats.abilityPower;
+        playerStats.movementSpeedMultiplier = (playerStats.movementSpeedMultiplier + 0.5f + (0.01f * tempAbilityPower));
+        yield return new WaitForSeconds(4.0f);
+        playerStats.movementSpeedMultiplier = (playerStats.movementSpeedMultiplier - (0.5f + (0.01f * tempAbilityPower)));
+        speedBoostIsActive = false;
+    }
+
+    /*IEnumerator LashAbility()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        if(speedBoostIsActive)
+        {
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                if (playerStats.canCast)
+                {
+                    Lash();
+                    speedBoostIsActive = false;
+                }
+            }
+        }
+    }*/
 
     [PunRPC]
     public void BasicAttack()
@@ -150,17 +213,45 @@ public class TiraAbilityScript : MonoBehaviourPun
         Debug.Log("Beginning Airbound Slash.");
     }
 
+    public void Lash()
+    {
+        lashTrigger.SetActive(true);
+        StartCoroutine(LashCheck());
+        Debug.Log("Beginning Lash.");
+    }
+
+    IEnumerator LashCheck()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Debug.Log("Lash trigger activated.");
+        wDamage = 20 + (20 * ranks.wRank) + (playerStats.totalAttackDamage * 0.3f);
+        lashTriggerVar.Trigger();
+        yield return new WaitForSeconds(0.01f);
+        float shieldStrength;
+        if (lashTriggerVar.enemiesHit > 0)
+        {
+            shieldStrength = 20f + (ranks.wRank * 30) + (playerStats.abilityPower * 0.5f) + (lashTriggerVar.enemiesHit * playerStats.maxHealth * 0.04f);
+        }
+        else
+        {
+            shieldStrength = 0f;
+        }     
+        this.GetComponent<Shields>().ActivateGeneralShield(5f, shieldStrength, 0f);
+        lashTrigger.SetActive(false);
+        Debug.Log("Lash trigger deactivated.");
+    }
+
     IEnumerator AirboundSlashCheck()
     {
         yield return new WaitForSeconds(0.75f);
-        trigger.airboundTrigger = true;
+        airboundTriggerVar.airboundTrigger = true;
         airboundSlashTrigger.GetComponentInChildren<AirboundSlashTrigger>().Trigger();
         airboundSlashTrigger.GetComponentInChildren<AirboundSlashSweetSpot>().Trigger();
         Debug.Log("Airbound Slash trigger activated.");
         yield return new WaitForSeconds(0.02f);
-        trigger.airboundTrigger = false;
-        trigger.enemiesInTrigger.Clear();
-        trigger.GetComponentInChildren<AirboundSlashSweetSpot>().enemiesInTrigger.Clear();
+        airboundTriggerVar.airboundTrigger = false;
+        airboundTriggerVar.enemiesInTrigger.Clear();
+        airboundTriggerVar.GetComponentInChildren<AirboundSlashSweetSpot>().enemiesInTrigger.Clear();
         airboundSlashTrigger.SetActive(false);
         Debug.Log("Airbound Slash trigger deactivated.");
     }
