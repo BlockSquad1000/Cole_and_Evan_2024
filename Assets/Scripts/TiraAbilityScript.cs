@@ -25,6 +25,8 @@ public class TiraAbilityScript : MonoBehaviourPun
 
     public bool speedBoostIsActive = false;
 
+    public Transform eTarget;
+
     public float qDamage;
     public float wDamage;
     public float eDamage;
@@ -112,6 +114,25 @@ public class TiraAbilityScript : MonoBehaviourPun
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Physics.Raycast(camToNavRay, out hit, 100))
+            {           
+                if (playerStats.canCast && eAbilityCooldown <= 0 && ranks.eRank > 0)
+                {
+                    if(hit.collider.tag == "Enemy")
+                    {
+                        eTarget = hit.transform;
+                        eTarget.GetComponent<PlayerStatInitializer>().Displaced(eTarget.gameObject.transform.position.x - .1f, eTarget.gameObject.transform.position.z - .1f, 1.0f);
+                    }
+                    else if (hit.collider.tag == "Player")
+                    {
+                        eTarget = hit.transform;   
+                    }
+                }
+            }
+        }
     }
 
     IEnumerator SpeedBoost()
@@ -155,48 +176,48 @@ public class TiraAbilityScript : MonoBehaviourPun
         {
             if (playerStats.hit1)
             {
-                movementScript.target.transform.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
+                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
                 Debug.Log("Landed a critical hit.");
             }
             else
             {
-                movementScript.target.transform.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
+                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
             }
         }
         else if(playerStats.hitCount == 2)
         {
             if (playerStats.hit2)
             {
-                movementScript.target.transform.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
+                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
                 Debug.Log("Landed a critical hit.");
             }
             else
             {
-                movementScript.target.transform.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
+                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
             }
         }
         else if (playerStats.hitCount == 3)
         {
             if (playerStats.hit3)
             {
-                movementScript.target.transform.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
+                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
                 Debug.Log("Landed a critical hit.");
             }
             else
             {
-                movementScript.target.transform.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
+                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
             }
         }
         else 
         {
             if (playerStats.hit4)
             {
-                movementScript.target.transform.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
+                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
                 Debug.Log("Landed a critical hit.");
             }
             else
             {
-                movementScript.target.transform.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
+                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
             }
         }
     }
@@ -244,8 +265,9 @@ public class TiraAbilityScript : MonoBehaviourPun
     IEnumerator AirboundSlashCheck()
     {
         yield return new WaitForSeconds(0.75f);
+        airboundTriggerVar = GetComponentInChildren<AirboundSlashTrigger>();
         airboundTriggerVar.airboundTrigger = true;
-        airboundSlashTrigger.GetComponentInChildren<AirboundSlashTrigger>().Trigger();
+        airboundTriggerVar.Trigger();
         airboundSlashTrigger.GetComponentInChildren<AirboundSlashSweetSpot>().Trigger();
         Debug.Log("Airbound Slash trigger activated.");
         yield return new WaitForSeconds(0.02f);

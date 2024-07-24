@@ -125,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
                 if(target != null)
                 {
                     targeting = true;
-                    damage = target.gameObject.GetComponent<Damage>();
+                    damage = target.gameObject.GetComponentInParent<Damage>();
                 }
                 else
                 {

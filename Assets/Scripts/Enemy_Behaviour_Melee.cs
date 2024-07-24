@@ -98,7 +98,7 @@ public class Enemy_Behaviour_Melee : MonoBehaviour
         gameObject.GetComponent<NavMeshAgent>().isStopped = true;
 
         attackDamage = (enemyStats.totalAttackDamage);
-        player.gameObject.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, attackDamage, true, false, false, false, enemyObj);
+        player.gameObject.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, attackDamage, true, false, false, false, enemyObj);
     }
 
     public void OnTriggerStay(Collider other)
