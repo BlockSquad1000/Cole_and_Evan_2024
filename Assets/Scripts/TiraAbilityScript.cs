@@ -14,6 +14,8 @@ public class TiraAbilityScript : MonoBehaviourPun
 
     public GameObject airboundSlashTrigger;
     public GameObject lashTrigger;
+    public GameObject scorpionTailTrigger;
+    public GameObject scorpionTailDestination;
 
     [SerializeField] AirboundSlashTrigger airboundTriggerVar;
     [SerializeField] LashTrigger lashTriggerVar;
@@ -26,6 +28,7 @@ public class TiraAbilityScript : MonoBehaviourPun
     public bool speedBoostIsActive = false;
 
     public Transform eTarget;
+    public LayerMask triggerMask;
 
     public float qDamage;
     public float wDamage;
@@ -117,7 +120,7 @@ public class TiraAbilityScript : MonoBehaviourPun
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Physics.Raycast(camToNavRay, out hit, 100))
+            if (Physics.Raycast(camToNavRay, out hit, 100, ~triggerMask))
             {           
                 if (playerStats.canCast && eAbilityCooldown <= 0 && ranks.eRank > 0)
                 {
@@ -125,14 +128,27 @@ public class TiraAbilityScript : MonoBehaviourPun
                     {
                         eTarget = hit.transform;
                         eTarget.GetComponent<PlayerStatInitializer>().Displaced(eTarget.gameObject.transform.position.x - .1f, eTarget.gameObject.transform.position.z - .1f, 1.0f);
+                        StartCoroutine(ScorpionTail());
                     }
                     else if (hit.collider.tag == "Player")
                     {
-                        eTarget = hit.transform;   
+                        eTarget = hit.transform;
+                        StartCoroutine(ScorpionTail());
                     }
                 }
             }
         }
+    }
+
+    IEnumerator ScorpionTail()
+    {
+        this.transform.LookAt(eTarget.transform);
+        scorpionTailTrigger.SetActive(true);
+
+        //float distance = Vector3.Distance(this.transform.position, scorpionTailTrigger.transform.position);
+        this.GetComponent<PlayerStatInitializer>().Displaced(scorpionTailDestination.transform.position.x, scorpionTailDestination.transform.position.z, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+
     }
 
     IEnumerator SpeedBoost()
@@ -172,54 +188,22 @@ public class TiraAbilityScript : MonoBehaviourPun
 
         playerStats.CriticalCheck();
 
-        if(playerStats.hitCount == 1)
+        if (movementScript.target != null)
         {
-            if (playerStats.hit1)
-            {
-                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
-                Debug.Log("Landed a critical hit.");
-            }
-            else
+            if (!playerStats.doesCrit)
             {
                 movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
             }
-        }
-        else if(playerStats.hitCount == 2)
-        {
-            if (playerStats.hit2)
-            {
-                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
-                Debug.Log("Landed a critical hit.");
-            }
             else
             {
-                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
+                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.75f, true, false, false, false, playerObjectTira);
             }
         }
-        else if (playerStats.hitCount == 3)
+        else
         {
-            if (playerStats.hit3)
-            {
-                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
-                Debug.Log("Landed a critical hit.");
-            }
-            else
-            {
-                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
-            }
+            Debug.Log("Enemy is missing from scene.");
         }
-        else 
-        {
-            if (playerStats.hit4)
-            {
-                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage * 1.5f, true, false, false, false, playerObjectTira);
-                Debug.Log("Landed a critical hit.");
-            }
-            else
-            {
-                movementScript.target.transform.GetComponentInParent<Damage>().DamageCalculation(Damage.DamageType.Physical, movementScript.attackDamage, true, false, false, false, playerObjectTira);
-            }
-        }
+        
     }
 
     [PunRPC]

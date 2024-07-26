@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform target;
     public bool targeting;
     public bool attacking;
+    public LayerMask triggerMask;
 
     [SerializeField] float time = 0f;
 
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            if (Physics.Raycast(camToNavRay, out hit, 100))
+            if (Physics.Raycast(camToNavRay, out hit, 100, ~triggerMask))
             {
                 if (playerStats.canMove)
                 {
@@ -66,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
                         playerStats.triggerRange.enabled = false;
                         targeting = false;
                         attacking = false;
+                        Debug.Log("Moving to a new point.");
                     }
 
                     if (hit.collider.tag == "Enemy")
@@ -76,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
                             transform.LookAt(hit.transform.position);
                             target = hit.transform;
                             playerStats.triggerRange.enabled = true;
+                            Debug.Log("Moving towards an enemy's position.");
                         }
                         else
                         {
@@ -125,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
                 if(target != null)
                 {
                     targeting = true;
-                    damage = target.gameObject.GetComponentInParent<Damage>();
+                    damage = target.gameObject.GetComponent<Damage>();
                 }
                 else
                 {

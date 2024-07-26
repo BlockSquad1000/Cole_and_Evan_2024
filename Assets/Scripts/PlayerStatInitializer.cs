@@ -85,13 +85,12 @@ public class PlayerStatInitializer : MonoBehaviourPun
     public float displacementRateCombined;
     public Vector3 startPos;
     public Vector3 newPos;
+    public Collider playerCollider;
 
     [Header("Crit Values")]
-    public float hitCount = 1;
-    public bool hit1;
-    public bool hit2;
-    public bool hit3;
-    public bool hit4;
+    public int hitCount = 0;
+    public bool[] hits;
+    public bool doesCrit;
 
     public bool dead;
 
@@ -170,6 +169,14 @@ public class PlayerStatInitializer : MonoBehaviourPun
         if(airborneDuration > 0)
         {
             this.transform.position = Vector3.MoveTowards(transform.position, newPos, displacementRateCombined * Time.deltaTime);
+        }
+
+        else
+        {
+            if (playerCollider.isTrigger)
+            {
+                playerCollider.isTrigger = false;
+            }
         }
 
         foreach(GameObject shield in generalShields)
@@ -455,7 +462,7 @@ public class PlayerStatInitializer : MonoBehaviourPun
     {
         Stunned(displacementTime);
         airborneDuration = displacementTime;
-
+        playerCollider.isTrigger = true;
         startPos = this.transform.position;
         newPos = new Vector3(x, 0.1f, z);
         Vector3 difference = newPos - startPos;
@@ -467,51 +474,55 @@ public class PlayerStatInitializer : MonoBehaviourPun
 
     public void CriticalCheck()
     {
-        if(critRate >= 25)
+        if(critRate == 0)
         {
-            hit4 = true;
-          //  Debug.Log("Fourth attack crits");
+            hits[0] = false;
+            hits[1] = false;
+            hits[2] = false;
+            hits[3] = false;
+            Debug.Log("No hit crits");
         }
-        else
+        else if(critRate == 25)
         {
-            hit4 = false;
+            hits[0] = true;
+            hits[1] = false;
+            hits[2] = false;
+            hits[3] = false;
+            Debug.Log("First hit crits");
         }
-        if(critRate >= 50)
+        else if(critRate == 50)
         {
-            hit2 = true;
-         //   Debug.Log("Second attack crits");
+            hits[0] = true;
+            hits[1] = false;
+            hits[2] = true;
+            hits[3] = false;
+            Debug.Log("Second hit crits");
         }
-        else
+        else if(critRate == 75)
         {
-            hit2 = false;
+            hits[0] = true;
+            hits[1] = true;
+            hits[2] = true;
+            hits[3] = false;
+            Debug.Log("Third hit crits");
         }
-        if(critRate >= 75)
+        else if(critRate == 100)
         {
-            hit3 = true;
-          //  Debug.Log("Third attack crits");
-        }
-        else
-        {
-            hit3 = false;
-        }
-        if(critRate >= 100)
-        {
-            hit1 = true;
-           // Debug.Log("First attack crits");
-        }
-        else
-        {
-            hit1 = false;
+            hits[0] = true;
+            hits[1] = true;
+            hits[2] = true;
+            hits[3] = true;
+            Debug.Log("All hits crit");
         }
 
-        if(hitCount < 4)
+        hitCount++;
+
+        if(hitCount > 3)
         {
-            hitCount++;
+            hitCount = 0;
         }
-        else
-        {
-            hitCount = 1;
-        }
+
+        doesCrit = hits[hitCount];
     }
 
     public void ApplyOnHitEffects()

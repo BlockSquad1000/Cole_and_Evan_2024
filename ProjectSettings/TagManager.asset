@@ -12,11 +12,14 @@ TagManager:
   - RevivalItem
   - PlayerUI
   - Shield
+  - GeneralShield
+  - PhysShield
+  - MagicShield
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Trigger
   - Water
   - UI
   - 
