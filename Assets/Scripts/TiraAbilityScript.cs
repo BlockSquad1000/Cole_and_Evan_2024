@@ -121,9 +121,12 @@ public class TiraAbilityScript : MonoBehaviourPun
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (Physics.Raycast(camToNavRay, out hit, 100, ~triggerMask))
-            {           
-                if (playerStats.canCast && eAbilityCooldown <= 0 && ranks.eRank > 0)
+            {
+                float distanceToEnemy = Vector3.Distance(this.transform.position, hit.transform.position);
+
+                if (playerStats.canCast && eAbilityCooldown <= 0 && ranks.eRank > 0 && distanceToEnemy <= 5)
                 {
+                    eDamage = 10 + (10 * ranks.eRank) + (playerStats.maxHealth * 0.01f * ranks.eRank) + playerStats.bonusAttackDamage;
                     if(hit.collider.tag == "Enemy")
                     {
                         eTarget = hit.transform;
@@ -146,11 +149,13 @@ public class TiraAbilityScript : MonoBehaviourPun
         this.transform.LookAt(eTarget.transform);
         scorpionTailTrigger.SetActive(true);
 
-        //float distance = Vector3.Distance(this.transform.position, scorpionTailTrigger.transform.position);
         this.GetComponent<PlayerStatInitializer>().Displaced(scorpionTailDestination.transform.position.x, scorpionTailDestination.transform.position.z, 0.5f);
+        yield return new WaitForEndOfFrame();
+        scorpionTailTrigger.GetComponent<LashTrigger>().ScorpionTailTrigger();
         yield return new WaitForSeconds(0.5f);
         this.GetComponent<NavMeshAgent>().enabled = true;
         scorpionTailTrigger.SetActive(false);
+        qAbilityCooldown = 0;
     }
 
     IEnumerator SpeedBoost()

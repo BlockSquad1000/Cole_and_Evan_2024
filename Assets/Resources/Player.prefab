@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7459437188123629752}
   - component: {fileID: 7406880895661738782}
   - component: {fileID: 2968998608190962246}
+  - component: {fileID: 7587285748184983922}
   m_Layer: 0
   m_Name: ScorpionTailTrigger
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1365018040495492277}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 2.75}
-  m_LocalScale: {x: 1, y: 1, z: 4.8854}
+  m_LocalScale: {x: 1, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6169177821070388382}
@@ -98,6 +99,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7587285748184983922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365018040495492277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531f760753a673144a2e5c3baf010930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 0
+  lashTrigger: 0
+  enemiesHit: 0
+  tiraAbilities: {fileID: 7633968139169649359}
+  enemiesInTrigger: []
 --- !u!1 &2291502547263692499
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,6 +668,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e46a868b4e406a4baecf9395347205b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7633968139169649359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 774035216753996497, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+  m_PrefabInstance: {fileID: 7155271473804402718}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633968139169649362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c686c83715a1343a4617ad381c9f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &7633968139169649361 stripped

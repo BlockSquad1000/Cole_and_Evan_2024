@@ -61,4 +61,15 @@ public class LashTrigger : MonoBehaviour
             return;
         }
     }
+
+    public void ScorpionTailTrigger()
+    {
+        foreach(GameObject enemy in enemiesInTrigger)
+        {
+            enemiesHit++;
+            enemy.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, tiraAbilities.eDamage, false, true, false, false, tiraAbilities.playerObjectTira);
+            Debug.Log(enemy + " took damage from Scorpion Tail.");
+            return;
+        }
+    }
 }
