@@ -452,9 +452,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5314214985999536479}
     m_Modifications:
+    - target: {fileID: 774035216753996489, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 774035216753996489, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 774035216753996490, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 774035216753996490, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: avoidancePriority
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 774035216753996492, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
       propertyPath: m_Name
       value: Tira
+      objectReference: {fileID: 0}
+    - target: {fileID: 774035216753996494, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 774035216753996494, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 774035216753996495, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
       propertyPath: m_RootOrder
@@ -582,6 +606,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7319235740138330864, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8090557218527709251, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8308004156084843177, guid: 60016de10c1f4284197fd50615a0e3fa, type: 3}

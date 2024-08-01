@@ -31,7 +31,6 @@ public class Enemy_Behaviour_Melee : MonoBehaviour
         enemyStats = GetComponent<PlayerStatInitializer>();
         enemyAI = GetComponent<Enemy_AI_Movement>();
         moveSpeed = enemyStats.totalMovementSpeed;
-        //enemyStats.triggerRange.enabled = false;
     }
 
     void Update()
@@ -42,11 +41,6 @@ public class Enemy_Behaviour_Melee : MonoBehaviour
             enemyAI.following = true;
             enemyAI.walkPointSet = false;
         }
-
-       /* if (!enemyStats.canMove)
-        {
-            myAgent.destination = gameObject.transform.position;
-        }*/
 
         time += Time.deltaTime;
 
@@ -82,13 +76,11 @@ public class Enemy_Behaviour_Melee : MonoBehaviour
             gameObject.GetComponent<NavMeshAgent>().isStopped = false;
             attacking = false;
             enemyAI.following = false;
-            //enemyAI.FindDestination();
         }
 
         if (attacking)
         {
             BasicAttack();
-            //Debug.Log(this.name + "is executing a basic attack.");
             attacking = false;
         }
     }
@@ -106,7 +98,6 @@ public class Enemy_Behaviour_Melee : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             player = other.gameObject.transform;
-            //Debug.Log("Found player.");
             {
                 if (player != null)
                 {

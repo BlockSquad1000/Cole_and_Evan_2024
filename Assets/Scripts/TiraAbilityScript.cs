@@ -129,6 +129,7 @@ public class TiraAbilityScript : MonoBehaviourPun
                         eTarget = hit.transform;
                         eTarget.GetComponent<PlayerStatInitializer>().Displaced(eTarget.gameObject.transform.position.x - .1f, eTarget.gameObject.transform.position.z - .1f, 1.0f);
                         StartCoroutine(ScorpionTail());
+                        this.GetComponent<NavMeshAgent>().enabled = false;
                     }
                     else if (hit.collider.tag == "Player")
                     {
@@ -148,7 +149,8 @@ public class TiraAbilityScript : MonoBehaviourPun
         //float distance = Vector3.Distance(this.transform.position, scorpionTailTrigger.transform.position);
         this.GetComponent<PlayerStatInitializer>().Displaced(scorpionTailDestination.transform.position.x, scorpionTailDestination.transform.position.z, 0.5f);
         yield return new WaitForSeconds(0.5f);
-
+        this.GetComponent<NavMeshAgent>().enabled = true;
+        scorpionTailTrigger.SetActive(false);
     }
 
     IEnumerator SpeedBoost()

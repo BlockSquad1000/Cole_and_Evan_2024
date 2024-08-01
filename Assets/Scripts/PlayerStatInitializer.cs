@@ -175,7 +175,7 @@ public class PlayerStatInitializer : MonoBehaviourPun
         {
             if (playerCollider.isTrigger)
             {
-                playerCollider.isTrigger = false;
+                //playerCollider.isTrigger = false;
             }
         }
 
