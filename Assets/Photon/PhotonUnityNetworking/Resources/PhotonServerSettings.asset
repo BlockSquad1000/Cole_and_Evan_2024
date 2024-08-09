@@ -49,6 +49,10 @@ MonoBehaviour:
   - Kill
   - Revive
   - SpawnUI
+  - Lash
+  - LashCheck
+  - ScorpionTail
+  - SpeedBoost
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

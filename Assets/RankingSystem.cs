@@ -39,7 +39,7 @@ public class RankingSystem : MonoBehaviour
 
     public void RankUpQ()
     {
-        if (ranks > 0 && qRank < Mathf.Ceil(playerLevel.currentLevel % 2) && qRank < 5)
+        if (ranks > 0 && /*qRank < Mathf.Ceil(playerLevel.currentLevel % 2) &&*/ qRank < 5)
         {
             ranks--;
             qRank++;
@@ -49,7 +49,7 @@ public class RankingSystem : MonoBehaviour
 
     public void RankUpW()
     {
-        if (ranks > 0 && wRank < Mathf.Ceil(playerLevel.currentLevel % 2) && wRank < 5)
+        if (ranks > 0 && /*wRank < Mathf.Ceil(playerLevel.currentLevel % 2) &&*/ wRank < 5)
         {
             ranks--;
             wRank++;
@@ -59,7 +59,7 @@ public class RankingSystem : MonoBehaviour
 
     public void RankUpE()
     {
-        if (ranks > 0 && eRank < Mathf.Ceil(playerLevel.currentLevel % 2) && eRank < 5)
+        if (ranks > 0 && /*eRank < Mathf.Ceil(playerLevel.currentLevel % 2) &&*/ eRank < 5)
         {
             ranks--;
             eRank++;

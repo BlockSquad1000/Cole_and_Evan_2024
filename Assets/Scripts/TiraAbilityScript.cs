@@ -16,9 +16,10 @@ public class TiraAbilityScript : MonoBehaviourPun
     public GameObject lashTrigger;
     public GameObject scorpionTailTrigger;
     public GameObject scorpionTailDestination;
+    public GameObject ultimateTrigger;
 
     [SerializeField] AirboundSlashTrigger airboundTriggerVar;
-    [SerializeField] LashTrigger lashTriggerVar;
+    [SerializeField] AbilityTrigger lashTriggerVar;
 
     public float qAbilityCooldown = 0;
     public float wAbilityCooldown = 0;
@@ -35,6 +36,7 @@ public class TiraAbilityScript : MonoBehaviourPun
     public float eDamage;
     public float rInstant;
     public float rDoT;
+    public float rDoTHealth;
 
     public PhotonView view;
     public Camera playerCam;
@@ -46,6 +48,7 @@ public class TiraAbilityScript : MonoBehaviourPun
     {
         airboundSlashTrigger.SetActive(false);
         lashTrigger.SetActive(false);
+        ultimateTrigger.SetActive(false);
         playerObjectTira = this.gameObject;
 
         view = GetComponent<PhotonView>();
@@ -133,17 +136,32 @@ public class TiraAbilityScript : MonoBehaviourPun
                         eTarget.GetComponent<PlayerStatInitializer>().Displaced(eTarget.gameObject.transform.position.x - .1f, eTarget.gameObject.transform.position.z - .1f, 1.0f);
                         StartCoroutine(ScorpionTail());
                         this.GetComponent<NavMeshAgent>().enabled = false;
+                        eAbilityCooldown = (18f - (0.5f * ranks.eRank)) / (1 + playerStats.abilityHaste);
                     }
                     else if (hit.collider.tag == "Player")
                     {
                         eTarget = hit.transform;
                         StartCoroutine(ScorpionTail());
+                        this.GetComponent<NavMeshAgent>().enabled = false;
+                        eAbilityCooldown = (18f - (0.5f * ranks.eRank)) / (1 + playerStats.abilityHaste);
                     }
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (playerStats.canCast && rAbilityCooldown <= 0 && ranks.rRank > 0)
+            {
+                rInstant = 75 + (100 * ranks.rRank) + (playerStats.totalAttackDamage * 1.5f);
+                rDoT = (20 * ranks.rRank) + (playerStats.totalAttackDamage * 0.1f);
+                rDoTHealth = 0.03f + (0.005f * playerStats.abilityPower);
+                StartCoroutine(Ultimate1());
+            }
+        }
     }
 
+    [PunRPC]
     IEnumerator ScorpionTail()
     {
         this.transform.LookAt(eTarget.transform);
@@ -151,13 +169,14 @@ public class TiraAbilityScript : MonoBehaviourPun
 
         this.GetComponent<PlayerStatInitializer>().Displaced(scorpionTailDestination.transform.position.x, scorpionTailDestination.transform.position.z, 0.5f);
         yield return new WaitForEndOfFrame();
-        scorpionTailTrigger.GetComponent<LashTrigger>().ScorpionTailTrigger();
+        scorpionTailTrigger.GetComponent<AbilityTrigger>().ScorpionTailTrigger();
         yield return new WaitForSeconds(0.5f);
         this.GetComponent<NavMeshAgent>().enabled = true;
         scorpionTailTrigger.SetActive(false);
         qAbilityCooldown = 0;
     }
 
+    [PunRPC]
     IEnumerator SpeedBoost()
     {
         speedBoostIsActive = true;
@@ -225,6 +244,7 @@ public class TiraAbilityScript : MonoBehaviourPun
         Debug.Log("Beginning Airbound Slash.");
     }
 
+    [PunRPC]
     public void Lash()
     {
         lashTrigger.SetActive(true);
@@ -232,12 +252,13 @@ public class TiraAbilityScript : MonoBehaviourPun
         Debug.Log("Beginning Lash.");
     }
 
+    [PunRPC]
     IEnumerator LashCheck()
     {
         yield return new WaitForSeconds(0.1f);
         Debug.Log("Lash trigger activated.");
         wDamage = 20 + (20 * ranks.wRank) + (playerStats.totalAttackDamage * 0.3f);
-        lashTriggerVar.Trigger();
+        lashTriggerVar.LashTrigger();
         yield return new WaitForSeconds(0.01f);
         float shieldStrength;
         if (lashTriggerVar.enemiesHit > 0)
@@ -250,6 +271,7 @@ public class TiraAbilityScript : MonoBehaviourPun
         }     
         this.GetComponent<Shields>().ActivateGeneralShield(5f, shieldStrength, 0f);
         lashTrigger.SetActive(false);
+        lashTrigger.GetComponent<AbilityTrigger>().enemiesInTrigger.Clear();
         Debug.Log("Lash trigger deactivated.");
     }
 
@@ -267,6 +289,32 @@ public class TiraAbilityScript : MonoBehaviourPun
         airboundTriggerVar.GetComponentInChildren<AirboundSlashSweetSpot>().enemiesInTrigger.Clear();
         airboundSlashTrigger.SetActive(false);
         Debug.Log("Airbound Slash trigger deactivated.");
+    }
+
+    IEnumerator Ultimate1()
+    {
+        ultimateTrigger.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        ultimateTrigger.GetComponent<AbilityTrigger>().UltimateTrigger();
+        this.GetComponent<ChannelingChecker>().SetChanneling(3.0f);
+        yield return new WaitForEndOfFrame();
+        StartCoroutine(Ultimate2());
+    }
+
+    IEnumerator Ultimate2()
+    {
+        ultimateTrigger.GetComponent<AbilityTrigger>().DoTTrigger();
+        yield return new WaitForSeconds(0.5f);
+
+        if (this.GetComponent<ChannelingChecker>().isChanneling)
+        {
+            StartCoroutine(Ultimate2());
+        }
+        else
+        {
+            ultimateTrigger.SetActive(false);
+            ultimateTrigger.GetComponent<AbilityTrigger>().enemiesInTrigger.Clear();
+        }
     }
 }
                                                 

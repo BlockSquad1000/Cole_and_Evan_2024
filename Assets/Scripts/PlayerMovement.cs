@@ -83,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
                         else
                         {
                             gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+                            myAgent.destination = this.gameObject.transform.position;
                         }
                     }
                 }
