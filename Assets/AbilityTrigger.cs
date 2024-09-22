@@ -58,7 +58,7 @@ public class AbilityTrigger : MonoBehaviour
             enemiesHit++;
             enemy.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, tiraAbilities.wDamage, false, true, false, false, tiraAbilities.playerObjectTira);
             Debug.Log(enemy + " took damage from Airbound Slash.");
-            return;
+         //   return;
         }
     }
 
@@ -69,7 +69,7 @@ public class AbilityTrigger : MonoBehaviour
             enemiesHit++;
             enemy.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, tiraAbilities.eDamage, false, true, false, false, tiraAbilities.playerObjectTira);
             Debug.Log(enemy + " took damage from Scorpion Tail.");
-            return;
+            //return;
         }
     }
 
@@ -81,7 +81,7 @@ public class AbilityTrigger : MonoBehaviour
             enemy.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, tiraAbilities.rInstant, false, true, false, false, tiraAbilities.playerObjectTira);
             enemy.GetComponent<PlayerStatInitializer>().Displaced(enemy.gameObject.transform.position.x - .1f, enemy.gameObject.transform.position.z - .1f, 1.5f);
             Debug.Log(enemy + " took damage and was knocked airborne from Tira's Ultimate.");
-            return;
+          //  return;
         }
     }
 
@@ -89,13 +89,20 @@ public class AbilityTrigger : MonoBehaviour
     {
         foreach (GameObject enemy in enemiesInTrigger)
         {
-            if (enemy.GetComponent<PlayerStatInitializer>().airborneDuration > 0)
+            if (enemy != null)
             {
-                enemy.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, (tiraAbilities.rDoT + (tiraAbilities.rDoTHealth * enemy.GetComponent<PlayerStatInitializer>().maxHealth)) * 1.1f, false, true, false, true, tiraAbilities.playerObjectTira);
+                if (enemy.GetComponent<PlayerStatInitializer>().airborneDuration > 0)
+                {
+                    enemy.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, (tiraAbilities.rDoT + (tiraAbilities.rDoTHealth * enemy.GetComponent<PlayerStatInitializer>().maxHealth)) * 1.1f, false, true, false, true, tiraAbilities.playerObjectTira);
+                }
+                else
+                {
+                    enemy.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, (tiraAbilities.rDoT + (tiraAbilities.rDoTHealth * enemy.GetComponent<PlayerStatInitializer>().maxHealth)), false, true, false, true, tiraAbilities.playerObjectTira);
+                }
             }
             else
             {
-                enemy.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, (tiraAbilities.rDoT + (tiraAbilities.rDoTHealth * enemy.GetComponent<PlayerStatInitializer>().maxHealth)), false, true, false, true, tiraAbilities.playerObjectTira);
+                Debug.Log("Enemy is not found.");
             }
         }
     }

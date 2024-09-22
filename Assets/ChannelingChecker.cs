@@ -35,7 +35,7 @@ public class ChannelingChecker : MonoBehaviour
         {
             currentTime -= Time.deltaTime;
 
-            if(currentTime <= 0 || !playerStats.canCast || this.GetComponent<NavMeshAgent>().isStopped)
+            if(currentTime <= 0 || !playerStats.canCast || this.GetComponent<NavMeshAgent>().isStopped == false)
             {
                 isChanneling = false;
             }

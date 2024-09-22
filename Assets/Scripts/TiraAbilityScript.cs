@@ -157,7 +157,14 @@ public class TiraAbilityScript : MonoBehaviourPun
                 rDoT = (20 * ranks.rRank) + (playerStats.totalAttackDamage * 0.1f);
                 rDoTHealth = 0.03f + (0.005f * playerStats.abilityPower);
                 StartCoroutine(Ultimate1());
+               // rAbilityCooldown = (90f - (15f * ranks.rRank)) / (1 + playerStats.abilityHaste);
             }
+        }
+
+        if (this.GetComponent<ChannelingChecker>().isChanneling == false)
+        {
+            ultimateTrigger.SetActive(false);
+            ultimateTrigger.GetComponent<AbilityTrigger>().enemiesInTrigger.Clear();
         }
     }
 
@@ -167,9 +174,9 @@ public class TiraAbilityScript : MonoBehaviourPun
         this.transform.LookAt(eTarget.transform);
         scorpionTailTrigger.SetActive(true);
 
-        this.GetComponent<PlayerStatInitializer>().Displaced(scorpionTailDestination.transform.position.x, scorpionTailDestination.transform.position.z, 0.5f);
-        yield return new WaitForEndOfFrame();
         scorpionTailTrigger.GetComponent<AbilityTrigger>().ScorpionTailTrigger();
+        yield return new WaitForEndOfFrame();
+        this.GetComponent<PlayerStatInitializer>().Displaced(scorpionTailDestination.transform.position.x, scorpionTailDestination.transform.position.z, 0.5f);
         yield return new WaitForSeconds(0.5f);
         this.GetComponent<NavMeshAgent>().enabled = true;
         scorpionTailTrigger.SetActive(false);
@@ -310,11 +317,11 @@ public class TiraAbilityScript : MonoBehaviourPun
         {
             StartCoroutine(Ultimate2());
         }
-        else
+       /* else
         {
             ultimateTrigger.SetActive(false);
             ultimateTrigger.GetComponent<AbilityTrigger>().enemiesInTrigger.Clear();
-        }
+        }*/
     }
 }
                                                 

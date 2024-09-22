@@ -50,7 +50,7 @@ public class AirboundSlashTrigger : MonoBehaviour
         {
             enemy.GetComponent<Damage>().DamageCalculation(Damage.DamageType.Physical, tiraAbilities.qDamage, false, true, false, false, tiraAbilities.playerObjectTira);
             Debug.Log(enemy + " took damage from Airbound Slash.");
-            return;
+          //  return;
         }
     }
 }

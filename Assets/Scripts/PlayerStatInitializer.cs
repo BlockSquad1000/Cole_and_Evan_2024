@@ -262,7 +262,7 @@ public class PlayerStatInitializer : MonoBehaviourPun
                     {
                         Destroy(this.gameObject);
 
-                        statGrowths.currentExp += expDrop;
+                        statGrowths.currentExp += this.expDrop;
                     }
                 }
             }
